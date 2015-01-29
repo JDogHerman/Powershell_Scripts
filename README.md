@@ -1,3 +1,3 @@
 # Powershell_Scripts
 
-This is just a dump of scipts I use with Windows Powershell. :~
+This is just a dump of scripts I use with Windows Powershell. :~
