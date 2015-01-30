@@ -1,4 +1,6 @@
 ﻿
+﻿#this script will find all DHCP leases to a MAC address across a domain.
+﻿
 Import-Module DhcpServer
 
 $searchbase = 'dc=tsg,dc=ds'
