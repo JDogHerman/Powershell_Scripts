@@ -1,6 +1,6 @@
-﻿Get-ADComputer -Filter * -Properties Name, msNPAllowDialin | ForEach-Object {
+# This script is run with a scheduled task and sets all enabled machines with there Dial In Tab not enabled to enabled.
 
-    Set-ADComputer -identity $_.name -replace @{msnpallowdialin='TRUE'}
+Get-ADComputer -Filter {(Enabled -eq $True) -and (msNPAllowDialin -ne $true)} -Properties Name, msNPAllowDialin | ForEach-Object {
+
+    Set-ADComputer -Identity $_.name -replace @{msNPAllowDialin='TRUE' }
 }
-
-#Get-ADComputer -Filter {Name -like '*-LT*'} -Properties Name, msNPAllowDialin | select Name, msnpallowdialin
