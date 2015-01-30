@@ -1,1 +1,0 @@
-﻿Import-Csv –Path reservations.csv | Add-DhcpServerv4Reservation -ComputerName dc1.tsg.ds
