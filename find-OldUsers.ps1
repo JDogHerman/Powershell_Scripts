@@ -2,7 +2,10 @@
     -Properties Name, SamAccountName, PasswordLastSet, `
         whenCreated, whenChanged, LastLogonTimestamp, nTSecurityDescriptor, `
         DistinguishedName |
-    Where-Object {$_.whenChanged -gt $((Get-Date).AddDays(-90))} |
+    Where-Object {[datetime]::FromFileTimeUTC($_.LastLogonTimestamp) -lt $((Get-Date).AddDays(-180))} |
+    Where-Object {($_.whencreated) -lt $((Get-Date).AddDays(-90))} |
+    Where-Object {$_.DistinguishedName -notlike '*silverchair*'} |
+    Where-Object {$_.DistinguishedName -notlike '*zServiceAccounts*'} |
     Select-Object Name, SamAccountName, PasswordLastSet, `
         whenCreated, whenChanged, `
         @{name='LastLogonTimestampDT';`
@@ -12,3 +15,5 @@
         DistinguishedName
 
 $oldusers | Export-CSV .\oldusers.csv -NoTypeInformation
+
+Write-host $oldusers.count

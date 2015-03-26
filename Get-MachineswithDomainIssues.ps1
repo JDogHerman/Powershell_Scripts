@@ -4,17 +4,35 @@
 
 $id = 5805
 $index = 6 
-$computername = 'tsgdc2.tsg.ds'
-$daysinpast = 5
+$computername = 'tsgdc1.tsg.ds', 'tsgdc2.tsg.ds', 'tsgdc3.tsg.ds'
+$daysinpast = 1
 
 $afterdate = (Get-Date).AddDays(-$daysinpast)
 
-$message = Get-WinEvent -FilterHashtable @{StartTime = $afterdate;logname='system'; id=$id} -ComputerName $computername | Select-Object Message
+$list = foreach ($pc in $computername) {
+$message = Get-WinEvent -FilterHashtable @{StartTime = $afterdate;logname='system'; id=5722} -ComputerName $pc | Select-Object Message
 
-$list = foreach ($line in $message) {
+    foreach ($line in $message) {
     
-    $line.Message.split(" ")[$index]
-
+    $line.Message.split(" ")[6]
+    }
 }
+$list += foreach ($pc in $computername) {
+$message = Get-WinEvent -FilterHashtable @{StartTime = $afterdate;logname='system'; id=5805} -ComputerName $pc | Select-Object Message
+
+    foreach ($line in $message) {
+    
+    $line.Message.split(" ")[6]
+    }
+}
+$list += foreach ($pc in $computername) {
+$message = Get-WinEvent -FilterHashtable @{StartTime = $afterdate;logname='system'; id=5723} -ComputerName $pc | Select-Object Message
+
+    foreach ($line in $message) {
+    
+    $line.Message.split(" ")[5]
+    }
+}
+
 
 $list -replace ("'",'') | sort-object | Get-Unique
