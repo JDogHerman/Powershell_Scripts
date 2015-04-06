@@ -1,9 +1,7 @@
 ﻿#this script pulls the event log and parses the computername for all machines having an error
 #authenticating to the domain
 #5722/6 - 5805/6 - 5723/5
-
-$id = 5805
-$index = 6 
+ 
 $computername = 'tsgdc1.tsg.ds', 'tsgdc2.tsg.ds', 'tsgdc3.tsg.ds'
 $daysinpast = 1
 
