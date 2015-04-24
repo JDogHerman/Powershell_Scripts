@@ -20,8 +20,11 @@ $body ="
 <p>This is a reminder. There are computers still listed in Patching OU. Computers left in this location are NOT supposed to live here. These computers are... </br>"
 
 $body+="<Table>"
-$body+="<tr><th>Computer Name:</th></tr>"
-Get-ADComputer -filter * -SearchBase "OU=Patching,OU=TSGE,DC=tsg,DC=ds" | select Name | Sort-Object Name | % { $Body+="<tr><td>$($_.Name)</td></tr>" }
+$body+="<tr><th>Computer Name:</th>"
+$body+="<th>Last Modified:</th>"
+$body+="<th>Object Description:</th></tr>"
+Get-ADComputer -filter * -SearchBase "OU=Patching,OU=TSGE,DC=tsg,DC=ds" -Properties * | select Name, modified, description | Sort-Object Name | 
+% { $Body+="<tr><td>$($_.Name)</td><td>$($_.Modified)</td><td>$($_.Description)</td></tr>" }
 $body+="</Table>"
 
 $body+="
