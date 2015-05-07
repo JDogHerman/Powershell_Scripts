@@ -1,5 +1,5 @@
 ﻿############################################################################
-### A Script to check webpages on disparte hosts and send an email when the are not suscessful
+### A Script to check webpages on disparate hosts and send an email when the are not suscessful
 ############################################################################
 $smtpServer = "mail.altercareonline.net"
 $from = "NOREPLY - IT Support <no-reply@altercareonline.net>"
