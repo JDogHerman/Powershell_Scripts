@@ -1,5 +1,5 @@
 ﻿############################################################################
-### A Script to check webpages on disparate hosts and send an email when the are not suscessful
+### A Script to check webpages on disparate hosts and send an email when the are not successful
 ############################################################################
 $smtpServer = "mail.altercareonline.net"
 $from = "NOREPLY - IT Support <no-reply@altercareonline.net>"
@@ -46,7 +46,7 @@ foreach ($emarhost in (get-adgroupmember -Identity $ADGoup | select name).name) 
             <p>There is an issue with the EMAR Machine: $emarhost...<p>&nbsp;</p></br>"
             $body+="It's last result was.. <p>&nbsp;</p></br>" 
             $body+= $resulttrimmed
-            $body+="The last update was greater than $checkdelay mins"
+            $body+="The last update was greater than $checkdelay minutes."
             $body+="
             <p><br /><br /> Please fix this. :( <br /><br /> 
             <p>&nbsp;</p>
