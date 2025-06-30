@@ -1,4 +1,4 @@
-﻿#
+#
 # ---------------------------------------------------------------------------------------------------------------------------
 #
 # http://code.msdn.microsoft.com/ConvertVMGeneration
@@ -1048,17 +1048,20 @@ Function Validate-SourceWindowsInstallation ( [String] $BootDiskFileName, `
         # What we're going to be converting
         Write-Info ("Found " + $SourceProductName + " " + $SourceOSVersion + " " + $($MachineType[$machineUint]) + " at " + $WorkingPartition.DriveLetter + ":\windows")
 
-        # Split the file version into constituent parts and make sure its in the format a.b.cccc.ddddd (well at least four parts)
-        $script:ProgressPoint = 670
-        $SourceOSVersionParts = $SourceOSVersion.Split(".")
-        $script:ProgressPoint = 671
-        if ($SourceOSVersionParts.GetUpperBound(0) -ne 4) { CleanUp "Could not determine OS version from source disk."  }
+    # Split the file version into constituent parts and make sure it has at least four segments (major.minor.build.revision)
+    $script:ProgressPoint = 670
+    $SourceOSVersionParts = $SourceOSVersion.Split(".")
+    $script:ProgressPoint = 671
+    if ($SourceOSVersionParts.Length -lt 4) {
+        CleanUp "Could not determine OS version from source disk – erwartet mindestens vier Teile (Major.Minor.Build.Revision), gefunden: $($SourceOSVersionParts.Length)."
+    }
+    Write-Verbose "OS Version gefunden: $SourceOSVersion ($($SourceOSVersionParts.Length) Teile)."
 
-        # Validate that the source is Windows version 6.2 or later (6.2 is Windows 8/Windows Server 2012)
+        # Validate that the source is Windows version 10 or later (10 is Windows 10/Windows Server 2016+)
         $script:ProgressPoint = 672
-        if ($SourceOSVersionParts[0] -lt 6) { CleanUp "Source OS must be version 6.2 (Windows 8/Windows Server 2012) or later." }
+        if ($SourceOSVersionParts[0] -lt 10) { CleanUp "Source OS must be version 10 (Windows 10/Windows Server 2016) or later." }
         $script:ProgressPoint = 673
-        if (($SourceOSVersionParts[0] -eq 6) -and ($SourceOSVersionParts[1] -lt 2)) { CleanUp "Source OS must be version 6.2 (Windows 8/Windows Server 2012) or later." }
+        if (($SourceOSVersionParts[0] -eq 10) -and ($SourceOSVersionParts[1] -lt 0)) { CleanUp "Source OS must be version 10 (Windows 10/Windows Server 2016) or later." }
 
         # Validate that the source operating system is 64-bit
         $script:ProgressPoint = 674
